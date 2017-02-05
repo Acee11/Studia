@@ -1,0 +1,24 @@
+#ifndef COMPLEX_H
+#define COMPLEX_H
+
+struct Complex
+{
+	double re;
+	double im;
+};
+
+
+struct Complex* add(struct Complex a,  struct Complex b);
+void add_m(struct Complex *a,  struct Complex *b);
+
+struct Complex* sub(struct Complex a,  struct Complex b);
+void sub_m(struct Complex *a,  struct Complex *b);
+
+struct Complex* mul(struct Complex a,  struct Complex b);
+void mul_m(struct Complex *a,  struct Complex *b);
+
+struct Complex* div(struct Complex a,  struct Complex b);
+void div_m(struct Complex *a,  struct Complex *b);
+
+
+#endif

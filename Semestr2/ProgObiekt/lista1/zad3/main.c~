@@ -1,0 +1,24 @@
+#include <stdio.h>
+#include "complexc.h"
+#include <stdlib.h>
+
+int main()
+{
+	Complex *z,*w;
+	z = malloc(sizeof(Complex));
+	w = malloc(sizeof(Complex));
+	z->re = 5.5;
+	z->im = 3.14;
+	w->re = 13.37;
+	w->im = 1.234;
+	print(*z);
+	print(*w);
+	z = divide(*z,*w);
+	print(*z);
+	w = mul(*z,*w);
+	print(*w);
+	z->re = z->im = 0;
+	w = divide(*z,*w);
+
+	return 0;
+}

@@ -1,0 +1,16 @@
+\contentsline {section}{\numberline {1}Wst\IeC {\k e}p}{1}
+\contentsline {subsection}{\numberline {1.1}Om\IeC {\'o}wienie tematu}{1}
+\contentsline {subsection}{\numberline {1.2}Definicje oraz zagadnienia}{2}
+\contentsline {section}{\numberline {2}Przegl\IeC {\k a}d wybranych metod wyznaczania pierwiastk\IeC {\'o}w funkcji}{3}
+\contentsline {subsection}{\numberline {2.1}Metoda Bisekcji}{3}
+\contentsline {subsection}{\numberline {2.2}Metoda Newtona}{3}
+\contentsline {subsection}{\numberline {2.3}Metoda Siecznych}{4}
+\contentsline {subsubsection}{\numberline {2.3.1}Wariant klasyczny}{4}
+\contentsline {subsubsection}{\numberline {2.3.2}Wariant A}{5}
+\contentsline {section}{\numberline {3}Testy numeryczne}{7}
+\contentsline {subsection}{\numberline {3.1}Informacje}{7}
+\contentsline {subsection}{\numberline {3.2}Por\IeC {\'o}wnanie}{7}
+\contentsline {subsubsection}{\numberline {3.2.1}Funkcja $f(x) = e^{sin(x)} - 2x^2 + log(x) + 5x$}{8}
+\contentsline {subsubsection}{\numberline {3.2.2}Funkcja: $x - e^{-cos(x)} - \sqrt {log(2 + sin(x))}$}{9}
+\contentsline {subsubsection}{\numberline {3.2.3}Funkcja: $\frac {(x-3)(x+1.2)(x-10)(x-3.14) + xlog(x)}{arctg(x) + 2}$}{10}
+\contentsline {section}{\numberline {4}Wnioski}{11}

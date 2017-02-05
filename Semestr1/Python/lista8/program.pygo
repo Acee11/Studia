@@ -1,0 +1,8 @@
+print "Start"
+square = lambda x : x*x
+x = 0
+_loop x = x + 1
+print 'x=' + str(square(x))
+if x >= 20 goto _koniec
+goto _loop
+_koniec print "Koniec"

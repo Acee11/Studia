@@ -1,0 +1,46 @@
+Interfejsy:
+Benefits:
+	posiada metody getHpBenefit(),getManaBenefit() oraz getDmgBenefit() slużące do wyliczania bonusu do odpowiednich statystyk
+Info:
+	metoda getInfo() powinna zwracać napis dostarczający informacji na temat danego obiektu
+
+Equipment:
+	Abstrakcyjna klasa implementująca większość funkcjonalności które powinien mieć ekwipunek - nazwe, bonusy do statystyk.
+	Znajduje się tak abstrakcyjna metoda getType() która służy do określania typu ekwipunku przez klasy pochodne,tzn bron, zbroja itp.
+	implementuje ona także interfejsy Info oraz Benefits, slużące odpowiednio do uzyskania informacji o danym obiekcie oraz
+	przeliczeniu bonusow do HP ipt które może używać postać(obiekt klasy Character)
+Weapon,Breastplate,Greaves,Gloves,Boots:
+	klasy pochodne Equipment,każda z nich implementuje metode getType(), zwracającą odpowiedni obiekt z Enum EqType
+CharacterEquipment:
+	Klasa posiadająca po obiekcie z klas Weapon,Breastplate,Greaves,Gloves,Boots.Preznaczona jest ona do tego by dostarczyć
+	odpowiedni interfejs do zakładania przedmiotów na odpowiedni slot, uzyskiwaniu informacji o całym ekwipunku.
+CharacterClass:
+	Enum posiadający 3 obiekty - WARRIOR, ROGUE, MAGE,które oznaczają klase postaci w grze.Posiadają one metody
+	getStrBonus(), getAgiBonus(), getIntBonus() zwracające bonusy do statystyk przy level up'ie, oraz getCharacterClassByNum(int n)
+	która jest funkcja z liczb całkowitych(int) w Enum CharacterClass(przydatna przy wybieraniu klasy przez uzytkownika).
+Stats:
+	klasa posiada 3 pola - strength, agility, intellgence, implementująca interfejs benefits - sluży ona do trzymania informacji o statystykach postaci oraz dostarczeniu interfejsu do zwiększania statystyk, obliczania bonusow do hp,many,dmg
+Character:
+	klasa postaci,posiadająca pola opisujące atrybuty które powinna mieć postać(exp,level,hp,mana,maxhp,maxmana,dmg), 
+	obiekt klasy Stats oraz obiekt klasy CharacterEquipment.Implementuje ona interfejs Info, pozwalający np na wypisanie wszystkich
+	informacji na ekran jeśli użytkownik sobie tego zażyczy.Jedyną(jak na tem moment) umiejętkościa postaci jest heal(),kóry
+	(jak nazwa wskazuje) leczy.
+Monster:
+	klasa opisuje to co ma nam przeszkodzic w grze, czyli potwory które mają własne statystyki oraz metode getInfo()
+Room:
+	klasa opisująca pokój w którym mogą znajdować się potwory, przedmioty oraz klucze.Oprócz tego są też przejscia(obiekty klasy Passage)
+	w lewo/prawo/góra/dół (coś w stylu grafu).Klasa implementuje interfejs Info
+Passage:
+	pośrednik między obiektami klasy Room,implementujący interfejs info, umożliwiający sprawną obsługę otwierania drzwi(jeśli są zamknięte)
+	Posiada Obiekt klasy Room oraz wartość boolowską mówiącą czy przejście jest otawrte czy zamknięte
+CommandParser:
+	klasa odpowiada za parsowanie komend wpisywanych przez uzytkownika i przerabianie ich na tokeny
+Token:
+	klasa posiada obiekt Enum TokenType(GO, LOOK_AROUND, STATUS, TAKE, INFO, EXIT, OPEN, HELP) oraz napis attr, który jest atrybutem tokenu,czyli czymś co pochodzi od użytkownika i nie da się tego wyrazić za pomocą enum
+Game:
+	główna klasa odpowiedzialna za logike rozgrywki.Jej pola to: SCANNER - obiekt służący do obsługi operacji wejścia/wyjścia,
+	commandParser(klasa CommandParser), character(postać którą gramy), currentRoom(pokój w którym obecnie się znajdujemy)
+ 
+
+
+

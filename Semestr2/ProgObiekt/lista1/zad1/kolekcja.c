@@ -1,0 +1,75 @@
+#include "kolekcja.h"
+#include <string.h>
+#include <stdlib.h>
+#include <stdio.h>
+
+void res(struct Kolekcja *k,int n) //zapotrzebowanie na pamiec
+{
+    if(n > k->mem)
+    {
+        Elem *e = malloc(2 * (k->mem * sizeof(Elem)));
+        memcpy(e, k->el, k->mem * sizeof(Elem));
+        free(k->el);
+        k->el = e;
+        k->mem *= 2;
+    }
+}
+
+void zbior(struct Kolekcja *k)
+{
+    k->size = 0;
+    k->mem = 1;
+    k->type = ZBIOR;
+    k->el = malloc(sizeof(Elem));
+}
+
+void torba(struct Kolekcja *k)
+{
+    k->size = 0;
+    k->mem = 1;
+    k->type = TORBA;
+    k->el = malloc(sizeof(Elem));
+}
+
+void wstaw(struct Kolekcja *k, Elem e)
+{
+    if(k->type == ZBIOR)
+    {
+        int i;
+        for(i = 0; i < k->size; i++)
+            if(k->el[i] == e)
+                return;
+    }
+    res(k, k->size+1);
+    k->el[k->size] = e;
+	k->size++;
+}
+
+int rozmiar(struct Kolekcja *k)
+{
+    return k->size;
+}
+
+int szukaj(struct Kolekcja *k, Elem e)
+{
+    if(k->type == ZBIOR)
+    {
+        int i;
+        for(i = 0; i < k->size; i++)
+            if(k->el[i] == e)
+                return 1;
+        return 0;
+    }
+    else
+    {
+        int i,counter=0;
+        for(i = 0; i < k->size; i++)
+            if(k->el[i] == e)
+                counter++;
+        return counter;
+    }
+}
+
+
+
+

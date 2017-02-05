@@ -1,0 +1,80 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include "complexc.h"
+
+void print( Complex a)
+{
+	char znak = '+';
+	if(a.im < 0) znak = '-';
+	printf("%.4f",a.re);
+	if(a.im != 0) printf(" %s %.4fi",&znak,a.im);
+	printf("\n");
+}
+
+ Complex* add( Complex a,  Complex b)
+{
+	 Complex *c = malloc(sizeof(Complex));
+	c->re = a.re + b.re;
+	c->im = a.im + b.im;
+	return c;
+}
+
+void add_m( Complex *a,  Complex *b)
+{
+	b->re += a->re;
+	b->im += a->im;
+}
+
+ Complex* sub( Complex a,  Complex b)
+{
+	 Complex *c = malloc(sizeof(Complex));
+	c->re = a.re - b.re;
+	c->im = a.im - b.im;
+	return c;
+}
+
+void sub_m( Complex *a,  Complex *b)
+{
+	b->re -= a->re;
+	b->im -= a->im;
+}
+
+ Complex* mul( Complex a,  Complex b)
+{
+	 Complex *c = malloc(sizeof( Complex));
+	c->re = (a.re * b.re) - (a.im * b.im);
+	c->im = (a.re * b.im)+(a.im * b.re);
+	return c;
+}
+
+void mul_m( Complex *a,  Complex *b)
+{
+	b->re = (a->re * b->re) - (a->im * b->im);
+	b->im = (a->re * b->im) + (a->im * b->re);
+}
+
+ Complex* divide( Complex a,  Complex b)
+{
+	if(b.re == 0 && b.im == 0)
+	{
+		printf("ERROR");
+		return NULL;
+	}
+	 Complex *c = malloc(sizeof( Complex));
+	c->re = ((a.re * b.re) + (a.im * b.im)) / ((b.re * b.re) + (b.im * b.im));
+	c->im = ((a.im * b.re) - (a.re * b.im)) / ((b.re * b.re) + (b.im * b.im));
+	return c;
+}
+
+void divide_m( Complex *a,  Complex *b)
+{
+	if(b->re == 0 && b->im == 0)
+	{
+		printf("ERROR");
+		return;
+	}
+	b->re = ((a->re * b->re) + (a->im * b->im)) / ((b->re * b->re) + (b->im * b->im));
+	b->im = ((a->im * b->re) - (a->re * b->im)) / ((b->re * b->re) + (b->im * b->im));
+
+}
+

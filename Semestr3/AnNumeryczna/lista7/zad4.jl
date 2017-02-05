@@ -1,0 +1,112 @@
+using Polynomials
+setprecision(1000)
+BF = BigFloat
+
+a = BF(-5)
+b = BF(5)
+
+function horner(poly, x)
+    s = 0
+    for i in poly
+        s = s*x + i
+    end
+    return s
+end
+
+function spline(f, x)
+    n = length(x) - 1
+    q = Array{BF}(n)
+    p = Array{BF}(n)
+    u = Array{BF}(n)
+    q[0 + 1] = 0
+    u[0 + 1] = 0
+    for k = 1:(n-1)
+        λ = (x[k + 1] - x[k-1 + 1])/(x[k+1 + 1] - x[k-1 + 1])
+        d = (f(x[k-1 + 1]) - f(x[k+1 + 1])) / ((x[k + 1] - x[k+1 + 1]) * (x[k+1 + 1] - x[k-1 + 1]))
+        p[k + 1] = λ*q[k-1 + 1] + BF(2)
+        q[k + 1] = (λ - BF(1)) / p[k + 1]
+        u[k + 1] = (d - λ*u[k-1 + 1]) / p[k + 1]
+    end
+    M = Array{BF}(n+1)
+    M[0 + 1] = 0
+    M[n-1 + 1] = 0
+    M[n-1 + 1] = u[n-1 + 1]
+    k = n-2
+    while(k>=1)
+        M[k + 1] = u[k + 1] + q[k + 1]*M[k+1 + 1]
+        k -= 1
+    end
+    return M
+end
+
+f(x) = exp(atan(x))
+function fint(a, b) 
+    P = map(x -> BF(x), [9, 18, 45, 60, 75, -62, 111])
+    v = horner(P, b)
+    u = horner(P, a)
+    h = (v * f(b) * f(b)) / (BF(160) * (b*b + 1)^3)
+    l = (u * f(a) * f(a)) / (BF(160) * (a*a + 1)^3)
+    return h - l
+end
+
+function sint(a, b, n)
+    x = linspace(a, b, n + 1)
+    M = spline(f, x)
+    S = 0
+    for k = 1:n-1
+        S += (((f(x[k + 1]) - f(x[k+1 + 1]))/(x[k + 1] - x[k+1 + 1])) - ((f(x[k-1 + 1]) - f(x[k + 1]))/(x[k-1 + 1] - x[k + 1]))) * M[k + 1]
+    end
+    return S
+end
+
+function vandMatrix(X)
+    n = length(X)
+    v = ones(n)
+    M = Array{BigFloat}(n,n)
+    i = n
+    while(i >= 1)
+        for j = 1:n
+            M[j,i] = v[j]
+            v[j] *= X[j]
+        end
+        i -= 1
+    end
+    return M
+end
+
+function lnint(a, b, n)
+    x = linspace(a, b, n)
+    M = vandMatrix(x)
+    y = [f(i) for i in x]
+    R = \(M, y)
+    p = Poly(reverse(R))
+    p = polyder(polyder(p))
+    p = p*p
+    p = polyint(p)
+    return p(b) - p(a)
+end
+
+
+
+
+
+
+@printf "Całka f:  %.10e\n" fint(BF(-5), BF(5))
+@printf "n = 10\nCałka s:  %.10e\n" sint(BF(-5), BF(5), 10)
+@printf "Całka Ln:  %.10e\n" lnint(BF(-5), BF(5), 10)
+@printf "n = 20\nCałka s:  %.10e\n" sint(BF(-5), BF(5), 20)
+@printf "Całka Ln:  %.10e\n" lnint(BF(-5), BF(5), 20)
+@printf "n = 50\nCałka s:  %.10e\n" sint(BF(-5), BF(5), 50)
+@printf "Całka Ln:  %.10e\n" lnint(BF(-5), BF(5), 50)
+#=
+Całka f:  1.2959967106e+00
+n = 10
+Całka s:  4.6115477784e-03
+Całka Ln:  4.4573505423e+01
+n = 20
+Całka s:  8.4345228837e-03
+Całka Ln:  4.3322629626e+04
+n = 50
+Całka s:  1.9913851279e-02
+Całka Ln:  2.9151173569e+15
+=#

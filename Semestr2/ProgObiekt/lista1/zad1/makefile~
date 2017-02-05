@@ -1,0 +1,1 @@
+cc kolekcja.c main.c -o main

@@ -1,0 +1,9 @@
+[ p v r, ~r v ~s, q v s, q v r, ~p v ~q, s v p ].
+prove([ p v r, ~r v ~s, q v s, q v r, ~p v ~q, s v p ], Proof).
+WCH: Logika dla Informatyków 2015, str. 37, zadanie 124.
+
+
+createProofList((3,q v s,axiom),[(3,q v s,axiom), (4,q v r,axiom),(5,~p v ~q,axiom),(6,s v p,axiom),(7,p v ~s,axiom),(8,r v ~q,axiom),(9,~p v q,axiom),(10,~s v s,axiom),(11,~s,axiom)], Result, [(1,p v r,axiom),(2,~r v ~s,axiom), (3,q v s,axiom),(4,q v r,axiom),(5,~p v ~q,axiom),(6,s v p,axiom),(7,p v ~s,axiom),(8,r v ~q,axiom),(9,~p v q,axiom),(10,~s v s,axiom),(11,~s,axiom)],11).
+
+
+

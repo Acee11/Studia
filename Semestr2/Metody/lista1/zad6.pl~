@@ -1,0 +1,8 @@
+bpolaczenie(wroclaw,warszawa).
+bpolaczenie(warszawa,wroclaw).
+bpolaczenie(warszawa,krakow).
+
+polaczenie(X,Y) :- bpolaczenie(X,Z), polaczenie(Z,Y).
+polaczenie(X,Y) :- bpolaczenie(X,Y).
+
+

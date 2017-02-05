@@ -1,0 +1,46 @@
+%dom(kolor,wlasciciel,zwierze,papierosy,napoj).
+
+
+sasiedztwo(X,Y,Domy) :-
+	Domy = (X,Y,_,_,_);
+	Domy = (_,X,Y,_,_);
+	Domy = (_,_,X,Y,_);
+	Domy = (_,_,_,X,Y);
+	Domy = (Y,X,_,_,_);
+	Domy = (_,Y,X,_,_);
+	Domy = (_,_,Y,X,_);
+	Domy = (_,_,_,Y,X).
+
+member(X,Domy) :- 
+	Domy = (X,_,_,_,_);
+	Domy = (_,X,_,_,_);
+	Domy = (_,_,X,_,_);
+	Domy = (_,_,_,X,_);
+	Domy = (_,_,_,_,X).
+
+rozmieszczenie(Domy) :-
+	Domy = (_,_,dom(_,_,_,_,mleko),_,_), %9
+	Domy = (dom(_,norweg,_,_,_),_,_,_,_), %10 
+	member(dom(czerwony,anglik,_,_,_), Domy), %2
+	member(dom(_,hiszpan,pies,_,_),Domy), %3
+	member(dom(zielony,_,_,_,kawa),Domy), %4
+	member(dom(_,ukrainiec,_,_,herbata),Domy), %5
+	member(dom(_,_,waz,winston,_),Domy), %7
+	member(dom(zolty,_,_,kool,_),Domy), %8
+	member(dom(_,_,_,lucky_strikes,sok),Domy), %13
+	member(dom(_,japonczyk,_,kent,_),Domy), %14
+	sasiedztwo(dom(_,norweg,_,_,_), dom(niebieski,_,_,_,_),Domy), %15
+	sasiedztwo(dom(_,_,_,cheasterfield,_), dom(_,_,lis,_,_),Domy), %11
+	sasiedztwo(dom(_,_,kon,_,_), dom(_,_,_,kool,_), Domy), %12
+	sasiedztwo(dom(zielony,_,_,_,_),dom(bialy,_,_,_,_),Domy). %6
+	
+
+
+
+
+
+
+
+
+
+

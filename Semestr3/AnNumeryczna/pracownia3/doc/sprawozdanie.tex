@@ -1,0 +1,196 @@
+\documentclass[11pt,wide]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{polski}
+\usepackage{lmodern}
+\usepackage{amsmath,amsthm}
+\usepackage{amsfonts}
+\usepackage{algpseudocode}
+\usepackage{pgfplots}
+\usepackage{enumerate}
+\newtheorem{thr}{Twierdzenie}
+\newtheorem{lem}[thr]{Lemat}
+\newtheorem*{dfn}{Definicja}
+\usepackage{graphicx}
+\graphicspath{ {img/} }
+\usepackage[export]{adjustbox}
+\title{Analiza numeryczna(M) - Pracownia 3 - Zadanie 17}
+\date{Styczeń 29, 2017}
+\author{Wojciech Balik}
+
+
+\begin{document}
+
+\maketitle                
+\thispagestyle{empty}     
+\tableofcontents          
+\section{Wstęp}
+W praktycznych zastosowaniach algebry liniowej dość popularny jest rozkład LU, gdzie dla danej macierzy $A \in \mathbb{R}^{n \times n}$ szukane są macierze $L \in \mathbb{L}^{n \times n}$ oraz $U \in \mathbb{U}^{n \times n}$ spełniające równanie:
+\begin{center}
+$A = LU$
+\end{center}
+Rozkład który zostanie omówiony jest szczególnym przypadkiem rozkładu LU. Rozkład Choleskiego, gdzie o macierzy $A$ zakładamy że jest symetryczna oraz dodatnio określona, jest postaci:
+\begin{center}
+$A = LL^T$
+\end{center}
+
+
+\section{Algorytm Banachiewicza-Choleskiego}
+Załóżmy że mamy daną macierz $M \in \mathbb{R}^{n \times n}$ symetryczną oraz dodatnio określoną.Chcemy znaleźć rozkład $M$ w postaci:
+\begin{equation}
+M = LL^T
+\end{equation}
+Gdzie L jest macierzą dolnotrójkątną stopnia $n$.\newline
+\noindent
+Zauważmy że korzystając z symetryczności $M$ możemy rozpisać to równanie jako:
+
+\[
+ \left[
+        \begin{array}{cccc}
+         	a_{1,1} & a_{2,1} & \ldots & a_{n,1}\\
+  			a_{2,1} & a_{2,2} & \ldots & a_{n,2} \\
+  			\vdots &  & & \vdots\\
+  			a_{n,1} & a_{n,2} & \ldots & a_{n,n} 
+         \end{array}
+    \right]
+      \quad
+ = \quad \left[
+       \begin{array}{cccc}
+          l_{1,1} & 0 & \ldots & 0\\
+          l_{2,1} & l_{2,2} & & 0 \\
+          \vdots &  & \ddots & \vdots\\ 
+          l_{n,1} & l_{n,2} & \ldots & l_{n,n}
+       \end{array}
+     \right]
+	 \left[
+       \begin{array}{cccc}
+          l_{1,1} & l_{2,1} & \ldots & l_{n,1}\\
+          0 & l_{2,2} &  & l_{n,2} \\
+          \vdots &  & \ddots & \vdots\\ 
+          0 & \ldots & 0 & l_{n,n}
+       \end{array}
+     \right]
+\]
+\noindent
+Wówczas możemy wyznaczyć elemeny macierzy $L$ idąc wiersz po wierszu, otrzymując:
+\begin{center}
+$l_{1,1}^2 = a_{1,1} \Rightarrow l_{1,1} = \sqrt{a_{1,1}}$ \\
+$ l_{2,1}l_{1,1} = a_{2,1} \Rightarrow l_{2,1} = \frac{a_{2,1}}{l_{1,1}}$ \\
+$\vdots$ 
+\end{center}
+\begin{equation}
+l_{i,i} = \sqrt{a_{i,i} - \displaystyle\sum_{k=1}^{i-1}l_{i,k}^2}
+\end{equation}
+\begin{equation}
+l_{i,j} = \frac{1}{l_{j,j}} (a_{i,j} - \displaystyle\sum_{k=1}^{j-1} l_{i,k}l_{j,k})
+\end{equation}
+Dzięki dodatniej określoności macierzy $M$, wszystkie wartości pod pierwiastkiem we wzorze (2) są dodatnie, więc nie ma potrzeby używać liczb zespolonych(szczegóły można doczytać w \cite{kincaid}).\newline
+Koszt wyznaczenia takiego rozkładu to $O(n^2)$.Zauważmy również że nie potrzebujemy trzymać w pamięci komputera dwóch macierzy $L$ oraz $L^T$, co pozwala zaoszczędzić nieco miejsca.
+
+
+
+\section{Zastosowania Rozkładu Choleskiego}
+Najbardziej oczywistym zastosowaniem jest rozwiązywanie układów równań.Załóżmy że mamy układ równań:
+\begin{equation}
+Ax = b
+\end{equation}
+Gdzie $A$ posiada rozkład Choleskiego.Wówczas otrzymujemy:
+\begin{equation}
+LL^Tx = b
+\end{equation}
+Zauważmy że rozwiązując równanie:
+\begin{equation}
+Ly = b
+\end{equation}
+oraz podstawiając do (3) a następnie mnożąc obustronnie przez $L^{-1}$, otrzymujemy:
+\begin{equation}
+L^Tx = y
+\end{equation}
+Rozwiązanie równań (4) oraz (5) to koszt $O(n^2)$, gdzie dla porównania, zwykła eliminacja Gaussa kosztuje $O(n^3)$.
+\noindent
+Mogłoby się wydawać że powyższa metoda nie znajdzie swojego zastosowania przez to że wymagane jest aby macierz A była symetryczna oraz dodatnio określona. Okazuje się jednak że takie macierze występują we wielu problemach, m.in. w równaniach różniczkowych cząstkowych, statystyce.
+
+\subsection{Problem najmniejszych kwadratów}
+Załóżmy że mamy układ równań:
+\begin{equation}
+Ax = b
+\end{equation}
+Gdzie $A \in \mathbb{R}^{m \times n}, \quad m > n,\quad rk(A) = n$.\newline
+Taki układ zazwyczaj nie ma rozwiązań, ale można znaleźć wektor x który minimalizuje wartość:
+\begin{center}
+$\lVert Ax-b\rVert_2^2$
+\end{center}
+Okazuje się że wektor $x$ musi spełniać:
+\begin{equation}
+(A^TA)x = A^Tb
+\end{equation}
+Zauważmy że:
+\begin{equation}
+(A^TA)^T = A^TA
+\end{equation}
+oraz dla dowolnego wektora $u \in \mathbb{R}^n$
+\begin{equation}
+u^TA^TAu = (Au)^T(Au) = \lVert Au \rVert_2^2 > 0
+\end{equation}
+Macierz jest więc symetryczna oraz dodatnio określona co umożliwia nam użycie rozkładu Choleskiego do rozwiązania tego problemu.
+
+\section{Testy numeryczne}
+Testy zostały przeprowadzone w następujący sposób:\newline
+Wybrana zostaje macierz $A$ oraz wektor $x$ który będzie prawdziwym rozwiązaniem, obliczany zostaje wektor b przez przemnożenie $M$ oraz $x$. Następnie wyznaczany zostaje wektor $\tilde{x}$ za pomocą rozkładu Choleskiego.\newline
+Do prezentacji błędów numerycznych posłużymy się błędem względnym:
+\begin{center}
+$\frac{\lVert x - \tilde{x} \rVert}{\lVert x \rVert}$
+\end{center}
+oraz residuum:
+\begin{center}
+$\lVert b - A\tilde{x} \rVert$
+\end{center}
+
+\subsection{Macierz Hilberta}
+Macierzą Hilberta nazywamy macierz $H = [h_{ij}]$, gdzie $h_{ij} = \frac{1}{i+j-1}$. Cechą charakterystyczną tej macierzy jest to że jest bardzo źle uwarunkowana - $cond(H_n) = O(\frac{e^{3.5n}}{\sqrt{n}})$. Używanie jej w obliczeniach numerycznych, nawet dla niewielkich n może spowodować duże błędy numeryczne.\newline
+Poniższa tabelka prezentuje błąd względny oraz residuum, gdzie wektor $b$ został tak dobrany że $x = [1, 2, ..., n]^T$
+
+\begin{center}
+\begin{tabular}{|c|c|c|}
+  \hline 
+  	$n$ & $\lVert b - Hx\rVert$ & $\frac{\lVert x - \tilde{x} \rVert}{\lVert x \rVert}$  \\ \hline
+  	3 & 0.000e+00 & 1.280e-14\\ \hline
+	6 & 4.441e-16 & 1.759e-10\\ \hline
+	9 & 1.662e-15 & 4.366e-06\\ \hline
+	11 & 2.391e-15 & 7.929e-03\\ \hline
+
+\end{tabular}
+\end{center}
+\noindent
+Problemy związane z błędami numerycznymi wcale nie muszą dotyczyć tylko wyniku.Mimo że macierz Hilberta jest dodatnio określona dla każdego $n$, to dla $n \geq 12$ wskutek zaokrągleń numerycznych wyrażenie pod pierwiastkiem we wzorze (2) jest ujemne. Wniosek z tego płynący jest taki że nawet jeśli macierz jest dodatnio określona w sensie matematycznym, wcale nie oznacza że w sensie numerycznym również tak będzie.
+
+\subsection{Macierz Pei}
+Macierz Pei to macierz postaci: $\textbf{1} + \epsilon I_n$, gdzie $\textbf{1}$ to macierz kwadratowa $n \times n$ mająca jedynki na wszystkich współrzędnych.Gdy $\epsilon \approx 0$ macierz jest źle uwarunkowana.Wektor $b$ został dobrany tak aby $x = [1, 1, ..., 1]^T$, oraz $\epsilon = 10e-15$
+
+\begin{center}
+\begin{tabular}{|c|c|c|}
+  \hline 
+  	$n$ & $\lVert b - Px\rVert$ & $\frac{\lVert x - \tilde{x} \rVert}{\lVert x \rVert}$  \\ \hline
+  	3 & 4.441e-16 & 1.549e-01\\ \hline
+	6 & 1.986e-15 & 2.125e-01\\ \hline
+	9 & 3.553e-15 & 8.231e-01\\ \hline
+	12 & 7.324e-15 & 1.046e+00\\ \hline
+	15 & 3.077e-15 & 1.209e+00\\ \hline
+	18 & 3.553e-15 & 1.216e+00\\ \hline
+
+\end{tabular}
+\end{center}
+
+\section{Wnioski}
+Rozkład Choleskiego zdecydowanie nie nadaje się do rozwiązań ogólnych, gdzie o rozkładanych macierzach nie wiemy nic, ponieważ szansa że taka macierz będzie symetryczna oraz dodatnio określona jest bardzo mała. Rozkład ten znalazł jednak zastosowanie w pewnych szczególnych problemach, sprawdzając się całkiem dobrze. Dość dużym minusem jest to że macierze które formalnie są określone dodatnio, z punktu widzenia obliczeń numerycznych wcale takie nie muszą być, co zmusza nas do użycia innego rozkładu.
+\begin{thebibliography}{10}
+\bibitem{kincaid}
+  David Kincaid, Ward Cheney,
+  przekł. Stefan Paszkowski,
+  \emph{Analiza Numeryczna},
+  Warszawa, WNT, 2006.
+\end{thebibliography}
+
+
+\end{document}

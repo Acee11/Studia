@@ -1,0 +1,24 @@
+#ifndef COMPLEX_H
+#define COMPLEX_H
+
+typedef struct
+{
+	double re;
+	double im;
+}Complex;
+
+void print( Complex a);
+Complex* add(Complex a,  Complex b);
+void add_m(Complex *a,  Complex *b);
+
+Complex* sub(Complex a,  Complex b);
+void sub_m(Complex *a,  Complex *b);
+
+Complex* mul(Complex a,  Complex b);
+void mul_m(Complex *a,  Complex *b);
+
+Complex* divide(Complex a,  Complex b);
+void divide_m(Complex *a,  Complex *b);
+
+
+#endif

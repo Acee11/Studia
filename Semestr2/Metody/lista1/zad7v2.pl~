@@ -1,0 +1,29 @@
+%dom(kolor,wlasciciel,napoj,papierosy,zwierze,nr_domu)
+sasiedztwo(X,Y) :-
+	X=1, Y=2;
+	X=2, Y=3;
+	X=3, Y=4;
+	X=4, Y=5.
+sasiedztwo(X,Y) :- sasiedztwo(Y,X).
+dom(czerwony,anglik,_,_,_,_).
+dom(_,hiszpan,_,_,pies,_).
+dom(zielony,_,kawa,_,_,_).
+dom(_,ukrainiec,herbata,_,_,_). 
+dom(zielony,_,_,_,_,X) :-
+	sasiedztwo(X,Y), dom(bialy,_,_,_,_,Y).
+dom(_,_,_,winstony,waz,_).
+dom(zolty,_,_,koole,_,_).
+dom(_,_,mleko,_,_,3).
+dom(_,norweg,_,_,_,1).
+dom(_,_,_,cheasterfieldy,_,X) :-
+	sasiedztwo(X,Y), dom(_,_,_,_,lis,Y).
+dom(_,_,_,_,kon,X) :-
+	sasiedztwo(X,Y), dom(_,_,_,koole,_,Y).
+dom(_,_,sok,lucky_strikes,_,_).
+dom(_,japonczyk,_,kenty,_,_).
+dom(_,norweg,_,_,_,X) :-
+	sasiedztwo(X,Y), dom(niebieski,_,_,_,_,Y).
+
+
+
+

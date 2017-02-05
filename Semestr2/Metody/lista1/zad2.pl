@@ -1,0 +1,25 @@
+czlowiek(zbyszek).
+odwiedza_zoo(zbyszek).
+smok(stefan).
+mieszka_w_zoo(stefan).
+
+nieszczesliwy(X) :- 
+	smok(X),
+	mieszka_w_zoo(X).
+szczesliwy(X) :- 
+	zwierze(X),
+	czlowiek(Y),
+	styka_sie(X,Y).
+mily(X) :- 
+	odwiedza_zoo(X),
+	czlowiek(X).
+styka_sie(X,Y) :- 
+	mieszka_w_zoo(X),
+	zwierze(X),
+	odwiedza_zoo(Y),
+	czlowiek(Y).
+
+zwierze(X) :- 
+	smok(X).
+
+

@@ -1,0 +1,37 @@
+sibling(X,Y) :- parent(Z,X), parent(Z,Y).
+sister(X,Y) :- sibling(X,Y), female(X).
+grandson(X,Y) :- male(X), parent(Z,X), parent(Y,Z).
+cousin(X,Y) :- male(X),parent(Z,X),parent(C,Y),sibling(Z,C).  
+descendant(X,Y) :- parent(Y,X).
+descendant(X,Y) :- parent(Z,X),descendant(Z,Y).
+is_mother(X) :- parent(X,_),female(X).
+is_father(X) :- male(X), parent(X,_).
+
+male(adam).
+male(mark).
+male(david).
+male(joshua).
+male(john).
+female(eve).
+female(ivonne).
+female(anna).
+female(helen).
+
+parent(john,joshua).
+parent(helen,joshua).
+
+parent(mark,david).
+parent(ivonne,david).
+
+parent(adam,helen).
+parent(adam,ivonne).
+parent(adam,anna).
+
+parent(eve,helen).
+parent(eve,ivonne).
+parent(eve,anna).
+
+
+
+
+

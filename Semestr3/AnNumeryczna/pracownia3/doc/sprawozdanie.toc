@@ -1,0 +1,8 @@
+\contentsline {section}{\numberline {1}Wst\IeC {\k e}p}{1}
+\contentsline {section}{\numberline {2}Algorytm Banachiewicza-Choleskiego}{2}
+\contentsline {section}{\numberline {3}Zastosowania Rozk\IeC {\l }adu Choleskiego}{2}
+\contentsline {subsection}{\numberline {3.1}Problem najmniejszych kwadrat\IeC {\'o}w}{3}
+\contentsline {section}{\numberline {4}Testy numeryczne}{4}
+\contentsline {subsection}{\numberline {4.1}Macierz Hilberta}{4}
+\contentsline {subsection}{\numberline {4.2}Macierz Pei}{4}
+\contentsline {section}{\numberline {5}Wnioski}{5}

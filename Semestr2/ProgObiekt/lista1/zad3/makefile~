@@ -1,0 +1,2 @@
+main: complexc.c main.c
+	cc complex.c main.c -o main

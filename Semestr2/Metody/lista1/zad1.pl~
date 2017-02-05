@@ -1,0 +1,9 @@
+ryba(stefan).
+kot(my_cat).
+ptak(janek).
+dzdzownica(jola).
+lubi(X,Y) :- ptak(X),dzdzownica(Y).
+lubi(X,Y) :- kot(X),ryba(Y).
+lubi(X,Y) :- przyjaciel(X,Y).
+przyjaciel(me,my_cat).
+je(my_cat,X) :- lubi(my_cat,X).
