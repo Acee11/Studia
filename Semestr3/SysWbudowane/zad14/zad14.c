@@ -30,13 +30,7 @@ int main()
 	time1 = clock();
 	for(size_t i = 0; i < size; ++i)
 	{
-//		x = buffer[i];
 		sum1 += ((buffer[i] | (buffer[i] + 1)) != 0xffffffff);
-		//if((x | (x + 1)) != 0xffffffff)
-		//{
-		//	sum1 += 1;		
-		//}
-
 	}
 	time1 = clock() - time1;
 
