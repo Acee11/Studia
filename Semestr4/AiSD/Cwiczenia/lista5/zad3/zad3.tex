@@ -1,0 +1,66 @@
+\documentclass[11pt,wide]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{polski}
+\usepackage{lmodern}
+\usepackage{amsmath,amsthm}
+\usepackage{algpseudocode}
+\usepackage{pgfplots}
+\usepackage{enumerate}
+\newtheorem{thr}{Twierdzenie}
+\newtheorem{lem}[thr]{Lemat}
+\newtheorem*{dfn}{Definicja}
+\usepackage{graphicx}
+\graphicspath{ {img/} }
+\usepackage[export]{adjustbox}
+\title{Rozwiązanie zadania 3\\
+}
+\author{Wojciech Balik}
+
+
+\begin{document}
+\maketitle     
+Załóżmy że mamy dane ciągi: \\
+\begin{center}
+$A = a_1 < a_2 < ... < a_n$ \\
+$B = b_1 < b_2 < ... < b_n$ \\
+\end{center}
+
+Zdefiniujmy $2n$ ciągów w następujący sposób: \\
+\begin{center}
+$C_1 = a_1 < b_1 < a_2 < b_2 < ... < a_n < b_n$
+\end{center}
+(Czyli innymi słowy: $a_i < b_j \iff i \leq j$) \\
+Pozostałe ciągi są tworzone poprzez zamiane miejscami elementów $a_i$ i $b_i$, lub $b_i$ oraz $a_{i+1}$ \\
+Przez zamiane miejscami mam na myśli zamiene razem z relacją mniejszości, tzn.
+\begin{center}
+$C_2 = b_1 < a_1 < a_2 < b_2 < ... < a_n < b_n$ \\
+$C_3 = a_1 < a_2 < b_1 < b_2 < ... < a_n < b_n$ \\
+itd.
+\end{center}
+
+Na początku, algorytm ma wiedzę tylko o relacjach w ciągach $A$ oraz $B$, więc potencjalnym rozwiązaniem może być każdy ciąg $C_i$. \\
+Gdyby algorytm zadał pytanie $a_2 <_? b_1$ a adwersarz odpowiedziałby "tak", to zostałoby jedno potencjalne rozwiązanie - $C_3$, 
+jednak my przyjmiemy inną strategię. Na pytanie $a_i <_? b_j$ odpowiadamy "tak" $\iff i \leq j$.
+
+\begin{lem}
+Niech $L_k$ oznacza ilość potencjalnych rozwiązań po $k$ porównaniach. Wówczas:
+\begin{center}
+$L_k \geq 2n - k$
+\end{center}
+\end{lem}
+\begin{proof}
+Dowód przez indukcję względem $k$. \\
+Teza jest przwdziwa dla $k = 0$ (mamy $L_0 = 2n$). \\
+Załóżmy że $T_{k-1} \geq 2n - k + 1$ i rozważmy przypadki(zakładam że algorytm nie pyta o coś co już wie):
+\begin{enumerate}
+\item 
+Algorytm porównuje $a_i$ i $b_i$ lub $b_i$ i $a_{i+1}$, odpowiadamy zgodnie ze strategią. Jest to prawda dla wszystkich ciągów $C_i$ oprócz tego w którym zamieniliśmy te elementy miejscami, 
+wówczas ten ciąg nie będzie więcej potencjalnym rozwiązaniem, a więc $T_k = T_{k-1}-1 \geq 2n-k$
+\item 
+Algorytm porównuje $a_i$ i $b_j$, gdzie $i \neq j$ oraz $i \neq j+1$ - odpowiadamy zgodnie ze strategią. Jest to prawda dla każdego ciągu $C_i$ a więc $T_k = T_{k-1} \geq 2n - k$.
+\end{enumerate} 
+\end{proof}
+Na końcu działania algorytmu $L_k = 1 \geq 2n - k$, a więc $k \geq 2n-1$. 
+\end{document}

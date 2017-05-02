@@ -2,6 +2,7 @@
 // 280254
 #include "recv_func.h"
 
+
 void recv_init(icmp_receiver* receiver,int sockfd, uint8_t* packet_buffer, size_t buffer_len, char* sender_ip_str, size_t ip_len)
 {
 	receiver->sockfd = sockfd;
