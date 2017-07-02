@@ -1,4 +1,4 @@
-Flags = -std=gnu++11 -Wall -W -O2 -static
+Flags = -std=c++11 -Wall -pedantic -Wextra -W -O2 -static -lm
 CPP = g++
 
 zadD.out: zadD.o
