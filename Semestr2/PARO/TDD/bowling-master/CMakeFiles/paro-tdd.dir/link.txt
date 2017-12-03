@@ -1,0 +1,1 @@
+/usr/bin/c++   -std=c++11 -g  -rdynamic CMakeFiles/paro-tdd.dir/BowlingTDDProject.cpp.o  -o paro-tdd -lboost_system -lboost_filesystem -lboost_unit_test_framework -lboost_unit_test_framework 

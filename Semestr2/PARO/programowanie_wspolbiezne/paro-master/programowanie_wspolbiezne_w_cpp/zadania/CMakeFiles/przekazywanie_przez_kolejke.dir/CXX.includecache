@@ -1,0 +1,28 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/wb/ace/code/Studia/Semestr2/PARO/programowanie_wspolbiezne/paro-master/programowanie_wspolbiezne_w_cpp/zadania/Queue.hpp
+queue
+-
+
+/home/wb/ace/code/Studia/Semestr2/PARO/programowanie_wspolbiezne/paro-master/programowanie_wspolbiezne_w_cpp/zadania/przekazywanie_przez_kolejke.cpp
+thread
+-
+typeinfo
+-
+iostream
+-
+Queue.hpp
+/home/wb/ace/code/Studia/Semestr2/PARO/programowanie_wspolbiezne/paro-master/programowanie_wspolbiezne_w_cpp/zadania/Queue.hpp
+condition_variable
+-
+isPrime.hpp
+/home/wb/ace/code/Studia/Semestr2/PARO/programowanie_wspolbiezne/paro-master/programowanie_wspolbiezne_w_cpp/zadania/isPrime.hpp
+
+external/isPrime.hpp
+

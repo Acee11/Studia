@@ -1,0 +1,1 @@
+/usr/bin/c++  -std=c++11 -Wall -Wfatal-errors  -rdynamic CMakeFiles/dup.dir/dup.cpp.o  -o dup gmock-1.7.0/gtest/libgtest.a gmock-1.7.0/gtest/libgtest_main.a gmock-1.7.0/gtest/libgtest.a -lpthread 

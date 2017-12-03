@@ -1,0 +1,19 @@
+synchroniczne --> asynchroniczne --> real time
+
+
+#define SYNCHRONOUS_MASK \
+    (sigmask(SIGSEGV) | sigmask(SIGBUS) | sigmask(SIGILL) | \
+     sigmask(SIGTRAP) | sigmask(SIGFPE) | sigmask(SIGSYS))
+
+
+00000000280b2603 ==> 101000000010110010011000000011
+                     | |       | ||  |  ||       |`->  1 = SIGHUP
+                     | |       | ||  |  ||       `-->  2 = SIGINT
+                     | |       | ||  |  |`----------> 10 = SIGUSR1
+                     | |       | ||  |  `-----------> 11 = SIGSEGV
+                     | |       | ||  `--------------> 14 = SIGALRM
+                     | |       | |`-----------------> 17 = SIGCHLD
+                     | |       | `------------------> 18 = SIGCONT
+                     | |       `--------------------> 20 = SIGTSTP
+                     | `----------------------------> 28 = SIGWINCH
+                     `------------------------------> 30 = SIGPWR

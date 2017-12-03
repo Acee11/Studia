@@ -1,0 +1,19 @@
+struct mutex
+{
+    int mut
+
+    init()
+    {
+        mut = 1
+    }
+
+    lock()
+    {
+        
+    }
+
+    unlock()
+    {
+
+    }
+}

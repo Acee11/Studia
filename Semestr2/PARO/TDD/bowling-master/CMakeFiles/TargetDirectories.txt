@@ -1,0 +1,4 @@
+/home/wb/ace/code/Studia/Semestr2/PARO/TDD/bowling-master/CMakeFiles/rebuild_cache.dir
+/home/wb/ace/code/Studia/Semestr2/PARO/TDD/bowling-master/CMakeFiles/edit_cache.dir
+/home/wb/ace/code/Studia/Semestr2/PARO/TDD/bowling-master/CMakeFiles/paro-tdd.dir
+/home/wb/ace/code/Studia/Semestr2/PARO/TDD/bowling-master/CMakeFiles/run.dir

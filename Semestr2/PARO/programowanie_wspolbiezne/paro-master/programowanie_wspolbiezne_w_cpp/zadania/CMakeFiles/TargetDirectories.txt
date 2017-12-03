@@ -1,0 +1,11 @@
+/home/wb/ace/code/Studia/Semestr2/PARO/programowanie_wspolbiezne/paro-master/programowanie_wspolbiezne_w_cpp/zadania/CMakeFiles/rebuild_cache.dir
+/home/wb/ace/code/Studia/Semestr2/PARO/programowanie_wspolbiezne/paro-master/programowanie_wspolbiezne_w_cpp/zadania/CMakeFiles/edit_cache.dir
+/home/wb/ace/code/Studia/Semestr2/PARO/programowanie_wspolbiezne/paro-master/programowanie_wspolbiezne_w_cpp/zadania/CMakeFiles/przekazywanie_przez_kolejke.dir
+/home/wb/ace/code/Studia/Semestr2/PARO/programowanie_wspolbiezne/paro-master/programowanie_wspolbiezne_w_cpp/zadania/CMakeFiles/podstawowa_synchronizacja.dir
+/home/wb/ace/code/Studia/Semestr2/PARO/programowanie_wspolbiezne/paro-master/programowanie_wspolbiezne_w_cpp/zadania/CMakeFiles/stworzenie_watku.dir
+/home/wb/ace/code/Studia/Semestr2/PARO/programowanie_wspolbiezne/paro-master/programowanie_wspolbiezne_w_cpp/zadania/CMakeFiles/argumenty_watku.dir
+/home/wb/ace/code/Studia/Semestr2/PARO/programowanie_wspolbiezne/paro-master/programowanie_wspolbiezne_w_cpp/zadania/CMakeFiles/wyjatki.dir
+/home/wb/ace/code/Studia/Semestr2/PARO/programowanie_wspolbiezne/paro-master/programowanie_wspolbiezne_w_cpp/zadania/CMakeFiles/obiad.dir
+/home/wb/ace/code/Studia/Semestr2/PARO/programowanie_wspolbiezne/paro-master/programowanie_wspolbiezne_w_cpp/zadania/external/CMakeFiles/rebuild_cache.dir
+/home/wb/ace/code/Studia/Semestr2/PARO/programowanie_wspolbiezne/paro-master/programowanie_wspolbiezne_w_cpp/zadania/external/CMakeFiles/external.dir
+/home/wb/ace/code/Studia/Semestr2/PARO/programowanie_wspolbiezne/paro-master/programowanie_wspolbiezne_w_cpp/zadania/external/CMakeFiles/edit_cache.dir

@@ -1,0 +1,56 @@
+struct rwlock
+{
+    int readers
+    int writer
+    mutex critsec
+    condvar noreaders
+    condvar nowriter
+
+    init()
+    {
+        readers = 0
+        writer = 0
+        critsec = make_mutex()
+        noreaders = make_condvar()
+        nowriter = make_condvar()
+    }
+
+    rdlock()
+    {
+        lock(critsec)
+        while writer == 1
+            condwait(nowriter, critsec)
+        readers++
+        unlock(critsec)
+    }
+
+    rdunlock()
+    {
+        lock(critsec)
+        readers--
+        if readers == 0
+            signal(noreaders)
+        unlock(critsec)
+    }
+
+    wrlock()
+    {
+        lock(critsec)
+        while readers > 0 or writer > 0
+            if readers > 0
+                condwait(noreaders, critsec)
+            if writer > 0
+                condwaint(nowriter, critsec)
+        writer = 1
+        unlock(critsec)
+    }
+
+    wrunlock()
+    {
+        lock(critsec)
+        writer = 0
+        signal_broadcast(nowriter)
+        unlock(critsec)
+    }
+
+}

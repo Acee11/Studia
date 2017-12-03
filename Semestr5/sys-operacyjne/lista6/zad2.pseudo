@@ -1,0 +1,39 @@
+struct semaphore
+{
+    mutex critsec
+    condvar gt_zero
+    int count
+    int wakeups
+
+    init(int cnt)
+    {
+        count = cnt
+        wakeups = 0
+        gt_zero = make_condvar()
+        critsec = make_mutex()
+    }
+
+    wait()
+    {
+        lock(critsec)
+        count--
+        
+        if count < 0
+            do
+                cond_wait(gt_zero, critsec)
+            while wakeups < 1
+            wakeups--
+
+        unlock(critsec)
+    }
+
+    post()
+    {   
+        lock(critsec)
+        count++
+        if count <= 0
+            wakeups++
+            cond_signal(gt_zero)
+        unlock(critsec)
+    }
+}

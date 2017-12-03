@@ -1,0 +1,16 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/wb/ace/code/Studia/Semestr2/PARO/programowanie_wspolbiezne/paro-master/programowanie_wspolbiezne_w_cpp/zadania/external/isPrime.cpp
+cmath
+-
+isPrime.hpp
+/home/wb/ace/code/Studia/Semestr2/PARO/programowanie_wspolbiezne/paro-master/programowanie_wspolbiezne_w_cpp/zadania/external/isPrime.hpp
+
+/home/wb/ace/code/Studia/Semestr2/PARO/programowanie_wspolbiezne/paro-master/programowanie_wspolbiezne_w_cpp/zadania/external/isPrime.hpp
+

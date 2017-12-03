@@ -1,0 +1,20 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/wb/ace/code/Studia/Semestr2/PARO/programowanie_wspolbiezne/paro-master/programowanie_wspolbiezne_w_cpp/zadania/wyjatki.cpp
+thread
+-
+iostream
+-
+ThreadGuard.hpp
+/home/wb/ace/code/Studia/Semestr2/PARO/programowanie_wspolbiezne/paro-master/programowanie_wspolbiezne_w_cpp/zadania/ThreadGuard.hpp
+
+external/ThreadGuard.hpp
+thread
+-
+

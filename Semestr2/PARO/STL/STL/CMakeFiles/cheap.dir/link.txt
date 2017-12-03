@@ -1,0 +1,1 @@
+/usr/bin/c++  -std=c++11 -Wall -Wfatal-errors  -rdynamic CMakeFiles/cheap.dir/cheap.cpp.o  -o cheap gmock-1.7.0/gtest/libgtest.a gmock-1.7.0/gtest/libgtest_main.a gmock-1.7.0/gtest/libgtest.a -lpthread 

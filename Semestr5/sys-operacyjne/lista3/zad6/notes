@@ -1,0 +1,6 @@
+proc:
+
+maps - mapa pamieci
+    address                    perms    offset     dev     inode            pathname
+    55b4127ea000-55b4127ef000   r-xp   00000000   fe:00   1483588          /usr/bin/xeyes
+

@@ -1,0 +1,6 @@
+src/MySmartPtr/MySmartPtr.hpp
+src/HeavyClass.cpp
+src/HeavyClass.hpp
+src/main.cpp
+src/ThrowingFunction.cpp
+src/ThrowingFunction.hpp

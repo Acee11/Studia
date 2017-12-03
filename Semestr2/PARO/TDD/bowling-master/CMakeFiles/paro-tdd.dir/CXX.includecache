@@ -1,0 +1,18 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/wb/ace/code/Studia/Semestr2/PARO/TDD/bowling-master/BowlingGame.h
+vector
+-
+
+/home/wb/ace/code/Studia/Semestr2/PARO/TDD/bowling-master/BowlingTDDProject.cpp
+boost/test/unit_test.hpp
+-
+BowlingGame.h
+/home/wb/ace/code/Studia/Semestr2/PARO/TDD/bowling-master/BowlingGame.h
+

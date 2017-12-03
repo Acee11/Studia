@@ -1,0 +1,3 @@
+/home/wb/ace/code/Studia/Semestr2/PARO/optymalizacje/optymalizacje/CMakeFiles/rebuild_cache.dir
+/home/wb/ace/code/Studia/Semestr2/PARO/optymalizacje/optymalizacje/CMakeFiles/SudokuValidator.dir
+/home/wb/ace/code/Studia/Semestr2/PARO/optymalizacje/optymalizacje/CMakeFiles/edit_cache.dir

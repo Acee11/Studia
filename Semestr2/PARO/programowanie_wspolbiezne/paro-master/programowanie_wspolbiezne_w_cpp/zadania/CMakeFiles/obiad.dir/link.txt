@@ -1,0 +1,1 @@
+/usr/bin/c++    -pthread -rdynamic CMakeFiles/obiad.dir/obiad.cpp.o  -o obiad 
