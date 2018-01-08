@@ -15,6 +15,7 @@
 #define NUM_PROC 10
 #define ON_BARRIER 3
 
+#define PRINT_TO_STDOUT 0
 
 #define run() usleep(1000 * ((int)rand() % 300 + 1000))
 
@@ -32,7 +33,9 @@ void race(barrier_t *barrier)
 {
     while(1)
     {
+        #if PRINT_TO_STDOUT
         puts("RUNNING!");
+        #endif
         fflush(stdout);
         run();
         bar_wait(barrier);
@@ -57,7 +60,7 @@ int create_process(barrier_t *barrier)
         if (sigaction(SIGINT, &new_action, NULL) == -1)
             handle_error("sigaction");
 
-        bar_init(barrier, 0, ON_BARRIER, 0);
+        bar_init(barrier, 0, ON_BARRIER);
         race(barrier);
     }
 
@@ -77,6 +80,8 @@ int main(void)
     if (sigaction(SIGINT, &new_action, NULL) == -1)
         handle_error("sigaction");
 
+    // zakladam ze wskaznik na pamiec dzielona jest ustawiony recznie,
+    // i ze wartosc jest ustawiona na 0
     barrier.waiting = mmap(
         NULL,
         sizeof(int), 
@@ -87,7 +92,7 @@ int main(void)
     );
     *barrier.waiting = 0;
 
-    bar_init(&barrier, 0, ON_BARRIER, CREATE);
+    bar_init(&barrier, 0, ON_BARRIER);
     int pids[NUM_PROC];
     for(int i = 0; i < NUM_PROC; ++i)
         pids[i] = create_process(&barrier);

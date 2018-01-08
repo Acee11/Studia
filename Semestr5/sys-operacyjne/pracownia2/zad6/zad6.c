@@ -1,8 +1,12 @@
 #include <pthread.h>
 #include <stdio.h>
-#include <mysemaphore.h>
+#include "./include/mysemaphore.h"
 #include <stdlib.h>
 #include <unistd.h>
+
+#define PRINT_TO_STDOUT 0
+
+#define handle_error(msg) do { perror(msg); exit(EXIT_FAILURE);} while (0)
 
 #define smoke() usleep(1000*((int)rand()%500 + 300))
 
@@ -58,15 +62,9 @@ void *tobacco_watcher(void *data)
 
         items |= TOBACCO;
         if(items & PAPER)
-        {
-            items = 0;
             sem_post(&matches_wakeup);
-        }
         else if(items & MATCHES)
-        {
-            items = 0;
             sem_post(&paper_wakeup);
-        }
 
         sem_post(&watcher_critsec);
     }
@@ -85,15 +83,9 @@ void *paper_watcher(void *data)
 
         items |= PAPER;
         if(items & TOBACCO)
-        {
-            items = 0;
             sem_post(&matches_wakeup);
-        }
         else if(items & MATCHES)
-        {
-            items = 0;
             sem_post(&tobacco_wakeup);
-        }
 
         sem_post(&watcher_critsec);
 
@@ -111,15 +103,9 @@ void *matches_watcher(void *data)
 
         items |= MATCHES;
         if(items & TOBACCO)
-        {
-            items = 0;
             sem_post(&paper_wakeup);
-        }
         else if(items & PAPER)
-        {
-            items = 0;
             sem_post(&tobacco_wakeup);
-        }
         sem_post(&watcher_critsec);
     }
 
@@ -132,14 +118,38 @@ void *smoker(void *data)
     while(1)
     {
         if(item_owned == MATCHES)
+        {
             sem_wait(&matches_wakeup);
+            assert(
+                (items & TOBACCO)
+                && (items & PAPER)
+                && !(items & MATCHES)
+            );
+        }
         else if(item_owned == TOBACCO)
+        {
             sem_wait(&tobacco_wakeup);
+            assert(
+                !(items & TOBACCO) 
+                && (items & PAPER) 
+                && (items & MATCHES)
+            );
+        }
         else
+        {
             sem_wait(&paper_wakeup);
+            assert(
+                (items & TOBACCO) 
+                && !(items & PAPER) 
+                && (items & MATCHES)
+            );
+        }
 
+        items = 0;
         smoke();
+        #if PRINT_TO_STDOUT
         printf("smoker %d finished smoking\n", item_owned);
+        #endif
         sem_post(&smoke);
     }
 
@@ -148,7 +158,6 @@ void *smoker(void *data)
 
 int main(void)
 {
-    // TODO obsluga bledow
     srand(1337);
 
     sem_init(&smoke, 1);
@@ -158,23 +167,33 @@ int main(void)
 
     sem_init(&watcher_critsec, 1);
 
-    pthread_create(&agent_thread, NULL, agent, NULL);
-    pthread_create(&tobacco_watcher_thread, NULL, tobacco_watcher, NULL);
-    pthread_create(&paper_watcher_thread, NULL, paper_watcher, NULL);
-    pthread_create(&matches_watcher_thread, NULL, matches_watcher, NULL);
+    if(pthread_create(&agent_thread, NULL, agent, NULL) != 0)
+        handle_error("pthread_create");
+    if(pthread_create(&tobacco_watcher_thread, NULL, tobacco_watcher, NULL) != 0)
+        handle_error("pthread_create");
+    if(pthread_create(&paper_watcher_thread, NULL, paper_watcher, NULL) != 0)
+        handle_error("pthread_create");
+    if(pthread_create(&matches_watcher_thread, NULL, matches_watcher, NULL) != 0)
+        handle_error("pthread_create");
     int data[3];
     for(int i = 0; i < 3; ++i)
     {
         data[i] = (1 << i);
-        pthread_create(&smoker_thread[i], NULL, smoker, &data[i]);
+        if(pthread_create(&smoker_thread[i], NULL, smoker, &data[i]) != 0)
+            handle_error("pthread_create");
     }
 
-    pthread_join(agent_thread, NULL);
-    pthread_join(tobacco_watcher_thread, NULL);
-    pthread_join(paper_watcher_thread, NULL);
-    pthread_join(matches_watcher_thread, NULL);
+    if(pthread_join(agent_thread, NULL) != 0)
+        handle_error("pthread_join");
+    if(pthread_join(tobacco_watcher_thread, NULL) != 0)
+        handle_error("pthread_join");
+    if(pthread_join(paper_watcher_thread, NULL) != 0)
+        handle_error("pthread_join");
+    if(pthread_join(matches_watcher_thread, NULL) != 0)
+        handle_error("pthread_join");
     for(int i = 0; i < 3; ++i)
-        pthread_join(smoker_thread[i], NULL);
+        if(pthread_join(smoker_thread[i], NULL) != 0)
+            handle_error("pthread_join");
 
     return 0;
 }

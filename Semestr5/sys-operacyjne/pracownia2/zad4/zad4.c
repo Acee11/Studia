@@ -1,3 +1,4 @@
+#include <assert.h>
 #include <pthread.h>
 #include <stdio.h>
 #include <semaphore.h>
@@ -13,6 +14,8 @@
 
 #define handle_error(msg) \
     do { perror(msg); exit(EXIT_FAILURE); } while (0)
+
+#define PRINT_TO_STDOUT 0
 
 #define eat() usleep(1000*((int)rand()%1000 + 300))
 #define fill() usleep(1000*((int)rand()%1000 + 300))
@@ -46,8 +49,11 @@ void cook()
         if(sem_wait(empty) != 0)
             if(errno != EINTR)
                 handle_error("sem_wait");
+        #if PRINT_TO_STDOUT
         printf("filling up the cauldron...\n");
         fflush(stdout);
+        #endif
+        assert(*portions == 0);
         fill();
         *portions = M;
         if(sem_post(full) != 0)
@@ -74,8 +80,15 @@ void savage()
                 if(errno != EINTR)
                     handle_error("sem_wait");
         }
-        int curr_portion = (*portions)--;
+        #if PRINT_TO_STDOUT
+        int curr_portion = *portions;
+        #endif
+        assert(*portions > 0);
+        --(*portions);
+        #if PRINT_TO_STDOUT
         printf("eaten portion %d\n", curr_portion);
+        fflush(stdout);
+        #endif
         if(sem_post(critsec) != 0)
             handle_error("sem_post"); 
 
@@ -185,7 +198,7 @@ int main(void)
     sigprocmask(SIG_UNBLOCK, &mask, NULL);
 
     for(int i = 0; i < N; ++i)
-        if(kill(savage_pid[i], SIGUSR1 == -1))
+        if(kill(savage_pid[i], SIGKILL == -1))
             handle_error("kill");  
     if(kill(cook_pid, SIGUSR1) == -1)
         handle_error("kill");

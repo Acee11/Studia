@@ -1,0 +1,4 @@
+ zbiór rezydentny - VmRSS
+ pamięć anonimowa, pliki - RssAnon, RssFile
+ data, text, stack -  VmData, VmStk, VmExe
+ tablica stron - VmPTE

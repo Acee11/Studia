@@ -9,7 +9,6 @@
 #include <unistd.h>
 
 #define UNLINK 1
-#define CREATE 1
 
 #define handle_error(msg) \
     do { perror(msg); exit(EXIT_FAILURE); } while (0)
@@ -23,6 +22,6 @@ typedef struct
     sem_t *critsec;
 } barrier_t;
 
-int bar_init(barrier_t *barrier, int id, int n, int create);
+int bar_init(barrier_t *barrier, int id, int n);
 void bar_wait(barrier_t *barrier);
 void bar_destroy(barrier_t *barrier, int id);

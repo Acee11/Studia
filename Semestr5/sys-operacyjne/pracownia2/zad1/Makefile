@@ -1,5 +1,5 @@
 CC = gcc
-FLAGS = -std=gnu11 -Wall -Wextra -I./include
+FLAGS = -std=gnu11 -Wall -Wextra
 PROG = zad1
 
 all: $(PROG).out

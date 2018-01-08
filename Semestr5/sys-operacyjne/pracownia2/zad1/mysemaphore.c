@@ -1,4 +1,4 @@
-#include <mysemaphore.h>
+#include "./include/mysemaphore.h"
 
 void sem_init(sem_t *sem, unsigned value)
 {

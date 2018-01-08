@@ -1,10 +1,11 @@
 #include <stdio.h>
 #include <pthread.h>
-#include <mysemaphore.h>
+#include <stdbool.h>
 #include <stdlib.h>
 #include <signal.h>
 #include <string.h>
 #include <unistd.h>
+#include "./include/mysemaphore.h"
 
 #define think() usleep(1000*((int)rand()%500 + 300))
 #define eat() usleep(1000*((int)rand()%500 + 300))
@@ -13,16 +14,18 @@
     do { perror(msg); exit(EXIT_FAILURE); } while (0)
 
 #define NUM_PHIL 5
+#define PRINT_TO_STDOUT 0
 
 sem_t forks[NUM_PHIL];
 pthread_t phil[NUM_PHIL];
 
+unsigned deadlock_check;
+bool terminate = false;
+
 void sigint_handler(int signum)
 {
     (void)signum;
-    for(int i = 0; i < NUM_PHIL; ++i)
-        if(pthread_cancel(phil[i]) != 0)
-            handle_error("pthread_cancel");
+    terminate = true;
 }
 
 void take_forks(int i)
@@ -61,8 +64,12 @@ void *philosopher(void *data)
         think();
         take_forks(i);
         eat();
+        #if PRINT_TO_STDOUT
         printf("Philosopher %d finished eating\n", i);
+        #endif
         put_forks(i);
+
+        ++deadlock_check;
     }
 }
 
@@ -87,6 +94,22 @@ int main()
             handle_error("pthread_create");
     }
 
+    // aktywne czekanie uzyte jest celowo by wykryc deadlocka
+    while(!terminate)
+    {
+        unsigned old_dl_check = deadlock_check;
+        sleep(2);
+        if (deadlock_check == old_dl_check)
+        {
+            fprintf(stderr, "Possible deadlock");
+            break;
+        }
+    }
+
+    for(int i = 0; i < NUM_PHIL; ++i)
+        if(pthread_cancel(phil[i]) != 0)
+            handle_error("pthread_cancel");
+    
     for(int i = 0; i < NUM_PHIL; ++i)
         pthread_join(phil[i], NULL);
 

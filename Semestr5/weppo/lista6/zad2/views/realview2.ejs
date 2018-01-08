@@ -1,0 +1,15 @@
+<html>
+
+<body>
+    <form>
+        <% options.forEach((option) => { %>
+            <input type="checkbox" name='<%= option.name %>' id='<%= option.id %>'>
+            <label for='<%= option.id %>'>
+                <%= option.text %>
+            </label>
+            <br>
+            <% }) %>
+    </form>
+</body>
+
+</html>

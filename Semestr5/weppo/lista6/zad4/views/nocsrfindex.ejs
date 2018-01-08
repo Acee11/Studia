@@ -1,0 +1,23 @@
+<html>
+
+<body>
+    <% if(username) {%>
+        <p>Username:
+            <%= username %>
+        </p>
+        <form method="POST" action="/logout">
+            <input type="submit" value="logout">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        </form>
+        <% } else { %>
+            <form method="POST" action="/login">
+                <input type="text" placeholder="login" name="username">
+                <br>
+                <input type="submit">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            </form>
+            <% } %>
+
+</body>
+
+</html>

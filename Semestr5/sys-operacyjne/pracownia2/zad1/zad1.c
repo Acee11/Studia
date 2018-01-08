@@ -1,16 +1,19 @@
 #include <pthread.h>
 #include <stdio.h>
-#include <mysemaphore.h>
+#include "./include/mysemaphore.h"
 #include <stdlib.h>
 #include <unistd.h>
 
 #define N 100
 #define M 1000
 
-sem_t critsec;
+#define handle_error(msg) \
+    do { perror(msg); exit(EXIT_FAILURE); } while (0)
 
+sem_t critsec;
 volatile int *data[M];
 volatile int *data_cpy[M];
+
 
 void *test_func(void *d)
 {
@@ -37,7 +40,7 @@ void *test_func(void *d)
 
 int main()
 {
-    srand(1337);
+    srand(time(NULL));
 
     sem_init(&critsec, 1);
 
@@ -47,10 +50,12 @@ int main()
         data[i] = malloc(sizeof(int));
 
     for(int i = 0; i < N; ++i)
-        pthread_create(&pthr[i], NULL, test_func, NULL);
+        if(pthread_create(&pthr[i], NULL, test_func, NULL) != 0)
+            handle_error("pthread_create");
 
     for(int i = 0; i < N; ++i)
-        pthread_join(pthr[i], NULL);
+        if(pthread_join(pthr[i], NULL) != 0)
+            handle_error("pthread_join");
 
     return 0;
 }

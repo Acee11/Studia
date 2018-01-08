@@ -3,9 +3,14 @@ const http = require('http'),
     Jimp = require('jimp'),
     util = require('util')
 
+function WrongCouponFormatException() {}
+
 Jimp.prototype.getBufferAsync = util.promisify(Jimp.prototype.getBuffer);
 async function getCoupon(model) {
     try {
+        if(!model.firstname || !model.lastname) {
+            throw new WrongCouponFormatException()
+        }
         let image = await Jimp.read(templateName)
         let font64 = await Jimp.loadFont(Jimp.FONT_SANS_64_BLACK)
         let font32 = await Jimp.loadFont(Jimp.FONT_SANS_32_BLACK)
@@ -28,6 +33,8 @@ async function getCoupon(model) {
             if(/^\d$/.test(zad)) {
                 sum += parseInt(zad)
                 image.print(font64, originX, originY, zad)
+            } else {
+                throw new WrongCouponFormatException()
             }
 
             originX += deltaX
@@ -40,7 +47,7 @@ async function getCoupon(model) {
 
         return image.getBufferAsync(image.getMIME())
     } catch(err) {
-        console.log(err)
+        throw err
     }
 
 }
@@ -55,9 +62,13 @@ app.set('views', './views')
 
 
 app.get('/', (req, res) => {
+    model = {err: false}
+    if(req.query.err) {
+        model.err = true
+    }
     res.statusCode = 200
     res.setHeader('Content-Type', 'text/html')
-    res.render('./index')
+    res.render('./index', model)
 })
 
 app.use(express.urlencoded({ extended: true }))
@@ -74,7 +85,11 @@ app.get('/print', (req, res) => {
             res.write(coupon)
             res.end()
         } catch(err) {
-            console.log(err)
+            if(err instanceof WrongCouponFormatException) {
+                res.redirect('/?err=true')
+            } else {
+                console.log(err)
+            }
         }
     })()
 })

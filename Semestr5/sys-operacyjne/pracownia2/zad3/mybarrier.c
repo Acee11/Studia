@@ -2,69 +2,39 @@
 
 
 
-int bar_init(barrier_t *barrier, int id, int n, int create) 
+int bar_init(barrier_t *barrier, int id, int n) 
 {
     barrier->n = n;
     char name[50] = {0};
 
     sprintf(name, "/barrier.critsec.%d", id);
-    if(create)
-    {
-        barrier->critsec = sem_open(
-            name, 
-            O_CREAT, 
-            0644, 
-            1
-        );
-    }
-    else
-    {
-        barrier->critsec = sem_open(
-            name,
-            O_RDWR
-        );
-    }
+    barrier->critsec = sem_open(
+        name, 
+        O_CREAT, 
+        0644, 
+        1
+    );
 
     if (barrier->critsec == SEM_FAILED)
         handle_error("sem_open");
 
     sprintf(name, "/barrier.inner.%d", id);
-    if(create)
-    {
-        barrier->inner_lock = sem_open(
-            name, 
-            O_CREAT, 
-            0644, 
-            n
-        );
-    }
-    else
-    {
-        barrier->inner_lock = sem_open(
-            name,
-            O_RDWR
-        );
-    }
+    barrier->inner_lock = sem_open(
+        name, 
+        O_CREAT, 
+        0644, 
+        n
+    );
     if(barrier->inner_lock == SEM_FAILED)
         handle_error("sem_open");
 
     sprintf(name, "/barrier.outer.%d", id);
-    if(create)
-    {
-        barrier->outer_lock = sem_open(
-            name, 
-            O_CREAT, 
-            0644, 
-            0
-        );
-    }
-    else
-    {
-        barrier->outer_lock = sem_open(
-            name,
-            O_RDWR
-        );
-    }
+    barrier->outer_lock = sem_open(
+        name, 
+        O_CREAT, 
+        0644, 
+        0
+    );
     if(barrier->outer_lock == SEM_FAILED)
         handle_error("sem_open");
 
